@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="IndiKore Calculator & Text Toolkit - Interactive web dashboard for Jenkins CI/CD tour assignment">
+    <title>IndiKore Suite | Calculator & Text Toolkit</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Ambient Glow -->
+    <div class="bg-mesh" aria-hidden="true">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+    </div>
+
+    <div class="app-container">
+        <!-- Top Navigation / Header -->
+        <header class="app-header">
+            <div class="brand-group">
+                <div class="brand-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                        <polyline points="2 17 12 22 22 17"></polyline>
+                        <polyline points="2 12 12 17 22 12"></polyline>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="brand-title">IndiKore <span>Toolkit</span></h1>
+                    <p class="brand-subtitle">Jenkins CI/CD Tour &bull; Java 17 + Maven</p>
+                </div>
+            </div>
+
+            <div class="header-status-group">
+                <div class="status-pill" id="system-status-pill" title="Server Health Check">
+                    <span class="status-dot"></span>
+                    <span id="system-status-text">Connecting...</span>
+                </div>
+                <div class="build-badge">
+                    <span class="badge-label">Tests</span>
+                    <span class="badge-val">39 Passed</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="nav-tabs" role="tablist">
+            <button class="tab-btn active" id="tab-btn-calc" role="tab" aria-selected="true" aria-controls="tab-panel-calc">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="4" y="2" width="16" height="20" rx="2"></rect>
+                    <line x1="8" y1="6" x2="16" y2="6"></line>
+                    <line x1="16" y1="14" x2="16" y2="18"></line>
+                    <path d="M16 10h.01"></path>
+                    <path d="M12 10h.01"></path>
+                    <path d="M8 10h.01"></path>
+                    <path d="M12 14h.01"></path>
+                    <path d="M8 14h.01"></path>
+                    <path d="M12 18h.01"></path>
+                    <path d="M8 18h.01"></path>
+                </svg>
+                Math Calculator
+            </button>
+            <button class="tab-btn" id="tab-btn-text" role="tab" aria-selected="false" aria-controls="tab-panel-text">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="4 7 4 4 20 4 20 7"></polyline>
+                    <line x1="9" y1="20" x2="15" y2="20"></line>
+                    <line x1="12" y1="4" x2="12" y2="20"></line>
+                </svg>
+                Text Studio
+            </button>
+            <button class="tab-btn" id="tab-btn-cicd" role="tab" aria-selected="false" aria-controls="tab-panel-cicd">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                </svg>
+                CI/CD Telemetry
+            </button>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            
+            <!-- Tab 1: Calculator Panel -->
+            <section class="tab-panel active" id="tab-panel-calc" role="tabpanel">
+                <div class="grid-2col">
+                    <!-- Left: Interactive Calculator Form -->
+                    <div class="card glass-card">
+                        <div class="card-header">
+                            <h2 class="card-title">Mathematical Engine</h2>
+                            <span class="card-tag">Calculator.java</span>
+                        </div>
+
+                        <form id="calc-form" class="calc-form" onsubmit="return false;">
+                            <div class="input-grid">
+                                <div class="form-group">
+                                    <label for="calc-input-a">First Value (A)</label>
+                                    <input type="number" step="any" id="calc-input-a" class="input-control" placeholder="e.g. 10" value="10" required>
+                                </div>
+                                <div class="form-group" id="group-val-b">
+                                    <label for="calc-input-b">Second Value (B)</label>
+                                    <input type="number" step="any" id="calc-input-b" class="input-control" placeholder="e.g. 5" value="5">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Operation</label>
+                                <div class="op-grid" role="radiogroup">
+                                    <button type="button" class="op-chip active" data-op="add" id="op-add" title="Add A + B">
+                                        <span class="op-symbol">+</span> Add
+                                    </button>
+                                    <button type="button" class="op-chip" data-op="subtract" id="op-subtract" title="Subtract A - B">
+                                        <span class="op-symbol">&minus;</span> Subtract
+                                    </button>
+                                    <button type="button" class="op-chip" data-op="multiply" id="op-multiply" title="Multiply A * B">
+                                        <span class="op-symbol">&times;</span> Multiply
+                                    </button>
+                                    <button type="button" class="op-chip" data-op="divide" id="op-divide" title="Divide A / B">
+                                        <span class="op-symbol">&divide;</span> Divide
+                                    </button>
+                                    <button type="button" class="op-chip" data-op="power" id="op-power" title="Power A^B">
+                                        <span class="op-symbol">^</span> Power
+                                    </button>
+                                    <button type="button" class="op-chip" data-op="factorial" id="op-factorial" title="Factorial A!">
+                                        <span class="op-symbol">!</span> Factorial
+                                    </button>
+                                    <button type="button" class="op-chip" data-op="isPrime" id="op-prime" title="Check if A is Prime">
+                                        <span class="op-symbol">&fnof;</span> Prime Check
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="calc-action-row">
+                                <button type="button" id="calc-submit-btn" class="primary-btn">
+                                    <span>Compute via Java API</span>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="9 18 15 12 9 6"></polyline>
+                                    </svg>
+                                </button>
+                                <button type="button" id="calc-clear-btn" class="ghost-btn">Clear</button>
+                            </div>
+                        </form>
+
+                        <!-- Live Result Display Box -->
+                        <div class="result-hero-box" id="calc-result-box">
+                            <span class="result-label">Computed Result</span>
+                            <div class="result-value-row">
+                                <span class="result-equation" id="calc-equation">10 + 5 =</span>
+                                <span class="result-number" id="calc-result-display">15.0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: History & Quick Presets -->
+                    <div class="card glass-card">
+                        <div class="card-header">
+                            <h2 class="card-title">Computation Log</h2>
+                            <button class="text-btn" id="clear-history-btn">Clear History</button>
+                        </div>
+                        <div class="history-list" id="calc-history-list">
+                            <div class="empty-state">No recent computations yet. Run an operation to see history.</div>
+                        </div>
+
+                        <div class="quick-presets">
+                            <h3 class="preset-title">Quick Test Presets</h3>
+                            <div class="preset-chips">
+                                <button class="chip" data-a="2" data-b="10" data-op="power">2^10 (1024)</button>
+                                <button class="chip" data-a="7" data-b="0" data-op="factorial">7! (5040)</button>
+                                <button class="chip" data-a="31" data-b="0" data-op="isPrime">Prime: 31</button>
+                                <button class="chip" data-a="100" data-b="0" data-op="divide">Zero Div Test</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab 2: Text Studio Panel -->
+            <section class="tab-panel" id="tab-panel-text" role="tabpanel" hidden>
+                <div class="grid-2col">
+                    <!-- Left: Input and Live Radar -->
+                    <div class="card glass-card">
+                        <div class="card-header">
+                            <h2 class="card-title">Live Text Transformer</h2>
+                            <span class="card-tag">TextToolkit.java</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="text-input-box">Input Text / Phrase</label>
+                            <textarea id="text-input-box" class="textarea-control" rows="5" placeholder="Type or paste any text to see live transformations..."></textarea>
+                        </div>
+
+                        <!-- Real-time metrics counters -->
+                        <div class="stats-counter-row">
+                            <div class="stat-card">
+                                <span class="stat-num" id="text-stat-words">0</span>
+                                <span class="stat-label">Words</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-num" id="text-stat-chars">0</span>
+                                <span class="stat-label">Characters</span>
+                            </div>
+                            <div class="stat-card" id="palindrome-radar-card">
+                                <span class="stat-badge is-not-palindrome" id="text-stat-palindrome">Not Palindrome</span>
+                                <span class="stat-label">Radar</span>
+                            </div>
+                        </div>
+
+                        <div class="text-actions-row">
+                            <button type="button" class="sample-text-btn" data-text="A man a plan a canal Panama">Load Palindrome</button>
+                            <button type="button" class="sample-text-btn" data-text="jenkins continuous integration and delivery pipeline">Load Jenkins Sample</button>
+                            <button type="button" id="text-clear-btn" class="ghost-btn">Clear</button>
+                        </div>
+                    </div>
+
+                    <!-- Right: Transformed Outputs -->
+                    <div class="card glass-card">
+                        <div class="card-header">
+                            <h2 class="card-title">Transformation Results</h2>
+                            <span class="card-status-ok">Live Synced</span>
+                        </div>
+
+                        <div class="output-block">
+                            <div class="output-label-row">
+                                <span class="output-label">Reversed String</span>
+                                <button class="copy-btn" data-target="text-out-reversed" title="Copy to clipboard">Copy</button>
+                            </div>
+                            <div class="output-box code-font" id="text-out-reversed">&mdash;</div>
+                        </div>
+
+                        <div class="output-block">
+                            <div class="output-label-row">
+                                <span class="output-label">Title Case Formatter</span>
+                                <button class="copy-btn" data-target="text-out-titlecase" title="Copy to clipboard">Copy</button>
+                            </div>
+                            <div class="output-box code-font" id="text-out-titlecase">&mdash;</div>
+                        </div>
+
+                        <div class="output-block">
+                            <div class="output-label-row">
+                                <span class="output-label">Raw JSON API Response</span>
+                                <button class="copy-btn" data-target="text-out-rawjson" title="Copy JSON">Copy JSON</button>
+                            </div>
+                            <pre class="output-box code-font raw-json" id="text-out-rawjson">{ "ready": true }</pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab 3: CI/CD Pipeline Telemetry Panel -->
+            <section class="tab-panel" id="tab-panel-cicd" role="tabpanel" hidden>
+                <div class="grid-3col">
+                    <!-- Column 1: Pipeline Stages Status -->
+                    <div class="card glass-card">
+                        <div class="card-header">
+                            <h2 class="card-title">Jenkins Pipeline Flow</h2>
+                            <span class="stage-status-badge">Declarative</span>
+                        </div>
+                        <ul class="pipeline-flow-list">
+                            <li class="flow-item done">
+                                <div class="flow-icon">&check;</div>
+                                <div class="flow-content">
+                                    <span class="flow-title">1. Checkout SCM</span>
+                                    <span class="flow-desc">Git repo cloned from main branch</span>
+                                </div>
+                            </li>
+                            <li class="flow-item done">
+                                <div class="flow-icon">&check;</div>
+                                <div class="flow-content">
+                                    <span class="flow-title">2. Maven Compile</span>
+                                    <span class="flow-desc">Java 17 source compilation</span>
+                                </div>
+                            </li>
+                            <li class="flow-item done">
+                                <div class="flow-icon">&check;</div>
+                                <div class="flow-content">
+                                    <span class="flow-title">3. Unit & Parameterized Tests</span>
+                                    <span class="flow-desc">39/39 JUnit 5 test cases passing</span>
+                                </div>
+                            </li>
+                            <li class="flow-item done">
+                                <div class="flow-icon">&check;</div>
+                                <div class="flow-content">
+                                    <span class="flow-title">4. Package Executable JAR</span>
+                                    <span class="flow-desc">Manifest Main-Class configured</span>
+                                </div>
+                            </li>
+                            <li class="flow-item done">
+                                <div class="flow-icon">&check;</div>
+                                <div class="flow-content">
+                                    <span class="flow-title">5. Smoke Test & Health Ping</span>
+                                    <span class="flow-desc">Active verification on port 8080</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Column 2: Health API Telemetry -->
+                    <div class="card glass-card">
+                        <div class="card-header">
+                            <h2 class="card-title">Service Telemetry</h2>
+                            <button id="refresh-telemetry-btn" class="icon-refresh-btn" title="Refresh Telemetry">&#x21bb;</button>
+                        </div>
+                        <div class="telemetry-grid">
+                            <div class="telem-item">
+                                <span class="telem-key">HTTP Status</span>
+                                <span class="telem-val text-green" id="telem-status">UP</span>
+                            </div>
+                            <div class="telem-item">
+                                <span class="telem-key">Latency</span>
+                                <span class="telem-val" id="telem-latency">-- ms</span>
+                            </div>
+                            <div class="telem-item">
+                                <span class="telem-key">Uptime</span>
+                                <span class="telem-val" id="telem-uptime">--</span>
+                            </div>
+                            <div class="telem-item">
+                                <span class="telem-key">Version</span>
+                                <span class="telem-val code-font">1.0.0</span>
+                            </div>
+                            <div class="telem-item">
+                                <span class="telem-key">Test Coverage</span>
+                                <span class="telem-val text-green">100% (39 tests)</span>
+                            </div>
+                            <div class="telem-item">
+                                <span class="telem-key">Port Binding</span>
+                                <span class="telem-val code-font">localhost:8080</span>
+                            </div>
+                        </div>
+
+                        <div class="api-links-group">
+                            <a href="/api/health" target="_blank" class="api-endpoint-link">
+                                <span>GET /api/health</span>
+                                <span>&rarr;</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Column 3: GitHub Projects Mapping -->
+                    <div class="card glass-card">
+                        <div class="card-header">
+                            <h2 class="card-title">GitHub Project Views</h2>
+                            <span class="card-tag">Assignment Items</span>
+                        </div>
+                        <p class="card-description">This application directly demonstrates the deliverables tracked on your project board:</p>
+                        <div class="view-item-box">
+                            <div class="view-item-header">
+                                <span class="view-pill pill-table">Table View</span>
+                                <span class="view-sub">Backlog Spreadsheet</span>
+                            </div>
+                            <p class="view-desc">Grouped by status with sum of estimates (Total: 13 pts).</p>
+                        </div>
+                        <div class="view-item-box">
+                            <div class="view-item-header">
+                                <span class="view-pill pill-board">Board View</span>
+                                <span class="view-sub">Kanban Progress</span>
+                            </div>
+                            <p class="view-desc">Cards displaying Priority & Estimate badges moving from Todo &rarr; Done.</p>
+                        </div>
+                        <div class="view-item-box">
+                            <div class="view-item-header">
+                                <span class="view-pill pill-roadmap">Roadmap View</span>
+                                <span class="view-sub">Sprint Timeline</span>
+                            </div>
+                            <p class="view-desc">Iteration 1 (App Logic & Tests) &rarr; Iteration 2 (CI/CD Pipeline).</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Global Toast Container -->
+        <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>IndiKore Labs &bull; Jenkins Tour Assignment &bull; Full-stack Java & Web Architecture</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
