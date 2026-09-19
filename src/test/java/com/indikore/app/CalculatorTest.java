@@ -75,4 +75,10 @@ class CalculatorTest {
     void testNonPrimeNumbers(int number) {
         assertFalse(calculator.isPrime(number));
     }
+
+    @Test
+    @DisplayName("Test large prime without integer overflow")
+    void testLargePrime() {
+        assertTrue(calculator.isPrime(Integer.MAX_VALUE));
+    }
 }

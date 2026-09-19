@@ -54,6 +54,8 @@ class TextToolkitTest {
     void testToTitleCase() {
         assertEquals("Hello World From Jenkins", toolkit.toTitleCase("hello world from jenkins"));
         assertEquals("Java", toolkit.toTitleCase("java"));
+        assertEquals("", toolkit.toTitleCase(""));
+        assertEquals("Hello World", toolkit.toTitleCase("  hELLo   WoRLD  "));
         assertNull(toolkit.toTitleCase(null));
     }
 }
