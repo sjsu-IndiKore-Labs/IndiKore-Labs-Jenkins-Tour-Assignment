@@ -45,7 +45,8 @@ public class App {
             return;
         }
 
-        int port = 8080;
+        int port = Integer.parseInt(
+        System.getenv().getOrDefault("APP_PORT", "8080"));
         String portEnv = System.getenv("PORT");
         if (portEnv != null && !portEnv.trim().isEmpty()) {
             try {
