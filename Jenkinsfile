@@ -1,8 +1,8 @@
 pipeline {
     agent {
-    docker {
-        image 'maven:3.9.16-eclipse-temurin-17'
-    	}
+        docker {
+            image 'maven:3.9.16-eclipse-temurin-17'
+    	}    
     }
 
     environment {
